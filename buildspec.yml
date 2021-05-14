@@ -9,4 +9,5 @@ phases:
       - echo "install finished."
   pre_build:
     commands:
-      - ./scripts/python-ci-content-scan.sh
+      - export labelName=python
+      - ./scripts/python-ci-content-scan.sh 
