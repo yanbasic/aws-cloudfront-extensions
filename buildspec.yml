@@ -9,5 +9,4 @@ phases:
       - echo "install finished."
   pre_build:
     commands:
-      - export labelName=${{ github.event.label.name }}
       - ./scripts/python-ci-content-scan.sh
