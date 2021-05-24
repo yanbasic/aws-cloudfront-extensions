@@ -19,7 +19,8 @@ phases:
     commands:
       - export labelName=python/simple-lambda-edge
       - ./scripts/python-ci-content-scan.sh
-      - pip3 install --upgrade aws-sam-cli selenium pylint
+      - pip install --upgrade aws-sam-cli selenium pylint
+      - pip install pytest pytest-mock --user
       - ./scripts/python-ci-style-check.sh
       - ./scripts/python-ci-build-ut.sh
       - ./scripts/edge-test.sh
