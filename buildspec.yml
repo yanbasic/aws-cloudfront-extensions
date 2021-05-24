@@ -1,11 +1,19 @@
 version: 0.2
 
 
+env:
+  secrets-manager:
+    AWSid: TestPipelineAccessKey:id
+    AWSkey: TestPipelineAccessKey:key
+
 phases:
   install:
     runtime-versions:
       python: 3.8
     commands:
+      - aws configure set aws_access_key_id $AWSid
+      - aws configure set aws_secret_access_key $AWSkey
+      - aws configure set default.region us-east-1
       - echo "install finished."
   pre_build:
     commands:
