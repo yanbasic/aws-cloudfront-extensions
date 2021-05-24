@@ -18,4 +18,7 @@ phases:
   pre_build:
     commands:
       - export labelName=python
-      - ./scripts/python-ci-content-scan.sh 
+      - ./scripts/python-ci-content-scan.sh
+      - ./scripts/python-ci-style-check.sh
+      - ./scripts/python-ci-build-ut.sh
+      - ./scripts/edge-test.sh
