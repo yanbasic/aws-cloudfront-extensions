@@ -17,7 +17,7 @@ phases:
       - echo "install finished."
   pre_build:
     commands:
-      - export labelName=python
+      - export labelName=python/simple-lambda-edge
       - ./scripts/python-ci-content-scan.sh
       - pip3 install --upgrade aws-sam-cli selenium pylint
       - ./scripts/python-ci-style-check.sh
