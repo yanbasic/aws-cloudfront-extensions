@@ -19,6 +19,7 @@ phases:
     commands:
       - export labelName=python
       - ./scripts/python-ci-content-scan.sh
+      - pip3 install --upgrade aws-sam-cli selenium pylint
       - ./scripts/python-ci-style-check.sh
       - ./scripts/python-ci-build-ut.sh
       - ./scripts/edge-test.sh
