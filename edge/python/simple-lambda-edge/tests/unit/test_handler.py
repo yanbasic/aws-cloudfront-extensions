@@ -1,6 +1,8 @@
 import json
 
 import pytest
+import os
+import sys
 
 script_dir = os.path.dirname( __file__ )
 mymodule_dir = os.path.join( script_dir, '..', '..', 'simple-lambda-edge' )
