@@ -11,4 +11,5 @@
 # apt-get install pylint
 
 echo edge/$labelName
-pylint edge/$labelName/
+export PYTHONPATH="${PWD}/edge/${labelName}/${labelName#*/}"
+pylint --rcfile .pylintrc edge/$labelName/
