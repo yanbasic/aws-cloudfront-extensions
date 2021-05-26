@@ -5,7 +5,9 @@ import os
 import sys
 
 script_dir = os.path.dirname( __file__ )
+print('>>>>>'+script_dir)
 mymodule_dir = os.path.join( script_dir, '..', '..', 'simple-lambda-edge' )
+print('>>>>>'+mymodule_dir)
 sys.path.append(mymodule_dir)
 import app
 
