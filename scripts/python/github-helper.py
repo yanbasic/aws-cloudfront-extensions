@@ -8,6 +8,9 @@ from github import Github
 
 # using an access token
 g = Github(sys.argv[0])
+print(sys.argv[0])
+
+SECRETS_MANAGER = boto3.client('secretsmanager')
 
 # Github Enterprise with custom hostname
 # g = Github(base_url="https://github.com/api/v3", login_or_token="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")
