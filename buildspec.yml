@@ -18,4 +18,4 @@ phases:
       - echo "install finished."
   pre_build:
     commands:
-      - python /scripts/python/github-helper.py $GHToken
+      - python scripts/python/github-helper.py $GHToken
