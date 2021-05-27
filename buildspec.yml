@@ -18,4 +18,5 @@ phases:
       - echo "install finished."
   pre_build:
     commands:
+      - pip install PyGithub
       - python scripts/python/github-helper.py $GHToken
