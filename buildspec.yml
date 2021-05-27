@@ -5,6 +5,7 @@ env:
   secrets-manager:
     AWSid: TestPipelineAccessKey:id
     AWSkey: TestPipelineAccessKey:key
+    GHToken: TestPipelineAccessKey:token
 
 phases:
   install:
@@ -24,3 +25,4 @@ phases:
       - ./scripts/python-ci-style-check.sh
       - ./scripts/python-ci-build-ut.sh
       - ./scripts/edge-test.sh
+      - ./scripts/github-helper.py GHToken
