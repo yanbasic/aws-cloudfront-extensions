@@ -3,9 +3,9 @@ version: 0.2
 
 env:
   secrets-manager:
-    AWSid: TestPipelineAccessKey:id
-    AWSkey: TestPipelineAccessKey:key
-    GHToken: TestPipelineAccessKey:token
+    AWSid: CodeBuild-cloudfront-extensions:access_key_id
+    AWSkey: CodeBuild-cloudfront-extensions:secret_access_key
+    GHToken: CodeBuild-cloudfront-extensions:oatuh_token
 
 phases:
   install:
@@ -24,6 +24,5 @@ phases:
       - pip install pytest pytest-mock --user
       - ./scripts/python-ci-style-check.sh
       - ./scripts/python-ci-build-ut.sh
-      - ./scripts/edge-test.sh
       - pip install PyGithub
       - python scripts/python/github-helper.py $GHToken
