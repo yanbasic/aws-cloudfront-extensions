@@ -19,10 +19,13 @@ SECRETS_MANAGER = boto3.client('secretsmanager')
 CODEBUILD = boto3.client('codebuild')
 print('=====================')
 print(os.getenv('CODEBUILD_BUILD_ID'))
-CODEBUILD.batch_get_builds(ids=[os.getenv('CODEBUILD_BUILD_ID')])
+response = CODEBUILD.batch_get_builds(ids=[os.getenv('CODEBUILD_BUILD_ID')])
+build_details = response['builds'][0]
+print(build_details)
+matches = re.match(r'^pr\/(\d+)', build_details.get('sourceVersion', ""))
+pr_id = int(matches.group(1))
+print(pr_id)
 
-
-python-build-cloudfront-extensions:b8e6834d-0204-417b-8ab9-413b6ccfd009
 # Then play with your Github objects:
 for repo in g.get_user().get_repos():
     if repo.name == 'aws-cloudfront-extensions':
