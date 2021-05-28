@@ -3,6 +3,8 @@ PR1
 [中文]() | [English]()
 
 
+![Build Status](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoicno4cjFFMldhNVJ2ZXJRL2QweEVLSlhFOGEwNWNqRCtmTzBpdmNXUTFTNTdhbGgvQ0NuMjlHTWdicVpwM1ErVmtMRDl6amhHYmR0Sjk0eTIwU01IbElFPSIsIml2UGFyYW1ldGVyU3BlYyI6ImkvdjZXejA5aFIwSUx6d3UiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=main)
+
 It's a valueable collection when using CloudFront, which includes rich set of featured Lambda@Edge, CloudFormation template for deployment of various scenarios and full monitoring solution. We tried to provide out-of-box experiences, such as install featured Lambda@Edge to enhance capability of CloudFornt, setup distribution through prepared CloudFormation templates, build up observability by leveraging monitoring solution.
 
 Please find the step-by-step workshop material here: https://awslabs.github.io/aws-cloudfront-extensions/
