@@ -2,6 +2,7 @@ import re
 
 import boto3
 import sys
+import os
 from github import Github
 
 # First create a Github instance:
@@ -15,8 +16,17 @@ SECRETS_MANAGER = boto3.client('secretsmanager')
 # Github Enterprise with custom hostname
 # g = Github(base_url="https://github.com/api/v3", login_or_token="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")
 
+CODEBUILD = boto3.client('codebuild')
+print('=====================')
+print(os.getenv('CODEBUILD_BUILD_ID'))
+response = CODEBUILD.batch_get_builds(ids=[os.getenv('CODEBUILD_BUILD_ID')])
+print(response)
+build_details = response['builds'][0]
+print(build_details)
+matches = re.match(r'^pr\/(\d+)', build_details.get('sourceVersion', ""))
+pr_id = int(matches.group(1))
+print(pr_id)
 
-print(g.get_user())
 # Then play with your Github objects:
 for repo in g.get_user().get_repos():
     if repo.name == 'aws-cloudfront-extensions':
