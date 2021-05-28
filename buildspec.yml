@@ -19,6 +19,7 @@ phases:
   pre_build:
     commands:
       - export labelName=python/simple-lambda-edge
+      - env
       - ./scripts/python-ci-content-scan.sh
       - pip install --upgrade aws-sam-cli selenium pylint
       - pip install pytest pytest-mock --user
