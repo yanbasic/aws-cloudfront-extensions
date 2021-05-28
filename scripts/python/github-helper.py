@@ -20,6 +20,7 @@ CODEBUILD = boto3.client('codebuild')
 print('=====================')
 print(os.getenv('CODEBUILD_BUILD_ID'))
 response = CODEBUILD.batch_get_builds(ids=[os.getenv('CODEBUILD_BUILD_ID')])
+print(response)
 build_details = response['builds'][0]
 print(build_details)
 matches = re.match(r'^pr\/(\d+)', build_details.get('sourceVersion', ""))
