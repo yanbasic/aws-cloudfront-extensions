@@ -25,5 +25,3 @@ phases:
       - pip install pytest pytest-mock --user
       - ./scripts/python-ci-style-check.sh
       - ./scripts/python-ci-build-ut.sh
-      - pip install PyGithub
-      - python scripts/python/github-helper.py $GHToken
