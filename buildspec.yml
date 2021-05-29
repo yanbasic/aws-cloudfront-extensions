@@ -20,5 +20,3 @@ phases:
     commands:
       - export labelName=python/simple-lambda-edge
       - env
-      - pip install PyGithub
-      - python scripts/python/github-helper.py $GHToken
