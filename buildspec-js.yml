@@ -1,0 +1,27 @@
+version: 0.2
+
+
+env:
+  secrets-manager:
+    AWSid: CodeBuild-cloudfront-extensions:access_key_id
+    AWSkey: CodeBuild-cloudfront-extensions:secret_access_key
+    GHToken: CodeBuild-cloudfront-extensions:oatuh_token
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.8
+    commands:
+      - aws configure set aws_access_key_id $AWSid
+      - aws configure set aws_secret_access_key $AWSkey
+      - aws configure set default.region us-east-1
+      - echo "install finished."
+  pre_build:
+    commands:
+      - export labelName=python/simple-lambda-edge
+      - env
+      - ./scripts/python-ci-content-scan.sh
+      - pip install --upgrade aws-sam-cli selenium pylint
+      - pip install pytest pytest-mock --user
+      - ./scripts/python-ci-style-check.sh
+      - ./scripts/python-ci-build-ut.sh
