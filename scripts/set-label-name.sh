@@ -1,3 +1,3 @@
 #! /bin/bash
 
-export labelName=`python python/set-label-name.py $GHToken`
+export labelName=`python3 python/set-label-name.py $GHToken`
