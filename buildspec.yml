@@ -18,6 +18,7 @@ phases:
       - echo "install finished."
   pre_build:
     commands:
+      - pip3 install PyGithub
       - export labelName=`python3 scripts/python/set-label-name.py $GHToken`
       - env
       - ./scripts/set-label-name.sh
