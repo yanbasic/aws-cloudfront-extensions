@@ -17,7 +17,7 @@ exports.handler = (event, context, callback) => {
     var selectionDomain = originList[selectionIndex].domain;
 
     console.log('domain: ' + selectionDomain);
-    console.log('PR TEST 22');
+    console.log('PR TEST 222');
     
     //change origin domain
     request.origin.s3.domainName = selectionDomain;
