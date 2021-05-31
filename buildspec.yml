@@ -18,6 +18,6 @@ phases:
       - echo "install finished."
   pre_build:
     commands:
-      - ls scripts/
+      - ls -l scripts/
       - ./scripts/set-label-name.sh
       - env
