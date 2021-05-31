@@ -8,4 +8,4 @@ python scripts/python/set-label-name.py $GHToken
 labelName=$(python scripts/python/set-label-name.py $GHToken $GHToken)
 echo $labelName
 export labelName=$labelName
-
+export labelName=7878aaa
