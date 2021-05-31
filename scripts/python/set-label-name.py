@@ -22,6 +22,7 @@ for file in repo.get_pull(pr_id).get_files():
     if file.filename.startswith('edge/python/') or file.filename.startswith('edge/nodejs/'):
         print(file.filename)
         print(re.match(r'^edge\/([^\/]+/[^\/]+)', file.filename).group(1))
+        os.environ["labelName"] = re.match(r'^edge\/([^\/]+/[^\/]+)', file.filename).group(1)
         sys.exit(0)
 
         
