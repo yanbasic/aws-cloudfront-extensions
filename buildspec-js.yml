@@ -10,7 +10,7 @@ env:
 phases:
   install:
     runtime-versions:
-      python: 3.8
+      nodejs: 10
     commands:
       - echo 7788
   pre_build:
