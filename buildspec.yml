@@ -18,5 +18,5 @@ phases:
       - echo "install finished."
   pre_build:
     commands:
-      - export labelName=python/simple-lambda-edge
+      - ./scripts/set-label-name.sh
       - env
