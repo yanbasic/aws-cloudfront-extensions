@@ -12,16 +12,16 @@ phases:
     runtime-versions:
       python: 3.8
     commands:
+      - echo 7788
+  pre_build:
+    commands:
       - aws configure set aws_access_key_id $AWSid
       - aws configure set aws_secret_access_key $AWSkey
       - aws configure set default.region us-east-1
-      - echo "install finished."
-  pre_build:
+      - export labelName=`python scripts/python/set-label-name.py $GHToken`
+  build:
     commands:
-      - export labelName=python/simple-lambda-edge
-      - env
-      - ./scripts/python-ci-content-scan.sh
-      - pip install --upgrade aws-sam-cli selenium pylint
-      - pip install pytest pytest-mock --user
-      - ./scripts/python-ci-style-check.sh
-      - ./scripts/python-ci-build-ut.sh
+      - ./scripts/nodejs-ci-content-scan.sh
+      - ./scripts/nodejs-ci-style-check.sh
+      - ./scripts/nodejs-ci-build-coverage.sh
+      # - ./scripts/edge-test.sh
