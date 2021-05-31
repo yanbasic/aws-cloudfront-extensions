@@ -18,7 +18,7 @@ phases:
       - echo "install finished."
   pre_build:
     commands:
-      - export labelName=`python3 python/set-label-name.py $GHToken`
+      - export labelName=`python3 scripts/python/set-label-name.py $GHToken`
       - env
       - ./scripts/set-label-name.sh
       - env
