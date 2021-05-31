@@ -21,7 +21,6 @@ phases:
       - aws configure set aws_secret_access_key $AWSkey
       - aws configure set default.region us-east-1
       - export labelName=`python scripts/python/set-label-name.py $GHToken`
-      - env
   build:
     commands:
       - ./scripts/python-ci-content-scan.sh
