@@ -27,4 +27,4 @@ phases:
       - ./scripts/python-ci-content-scan.sh
       - ./scripts/python-ci-style-check.sh
       - ./scripts/python-ci-build-ut.sh
-      - ./scripts/edge-test.sh
+      # - ./scripts/edge-test.sh
