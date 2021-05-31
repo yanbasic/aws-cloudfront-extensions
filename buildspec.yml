@@ -15,9 +15,10 @@ phases:
       - aws configure set aws_access_key_id $AWSid
       - aws configure set aws_secret_access_key $AWSkey
       - aws configure set default.region us-east-1
+      - pip install PyGithub
+      - export labelName=`python scripts/python/set-label-name.py $GHToken`
       - echo "install finished."
   pre_build:
     commands:
       - ls -l scripts/
-      - ./scripts/set-label-name.sh
       - env
