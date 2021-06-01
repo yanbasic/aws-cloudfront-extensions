@@ -8,7 +8,7 @@ In this step, you will create a Lambda function by AWS Serverless Application Mo
 
 ## Download a sample AWS SAM application
 
-After completing **UPLOAD CLOUDFRONT+ CODE INTO CLOUDSHELL** section, you have uploaded CloudFront+ into CloudShell, go to CloudFront+ folder and perform following commands:
+After completing **Upload CloudFront Extensions Code into CloudShell** section, you have uploaded CloudFront Extensions into CloudShell, go to CloudFront Extensions folder and perform following commands:
 
        cd edge/nodejs/
        sam init
@@ -16,6 +16,10 @@ After completing **UPLOAD CLOUDFRONT+ CODE INTO CLOUDSHELL** section, you have u
    Choose **1 - AWS Quick Start Templates**
    
    ![SAM init1](/images/sam-init1.png)
+
+   Choose **1 - Zip**
+
+   ![SAM init package](/images/sam-package-type.png)
 
    Choose **1 - nodejs12.x**
    
@@ -67,13 +71,13 @@ To create a Lambda@Edge function
             return response;
         };
 
-2. Modify template.yaml, you need to add an IAM role into the yaml file, it will be assumed by the service principals when they execute your function. The change is shown in below image, you must replace the original template.yaml with the [new one](https://drive.corp.amazon.com/documents/lvning@/Workshop/template.yaml)
+2. Modify template.yaml, you need to add an IAM role into the yaml file, it will be assumed by the service principals when they execute your function. The change is shown in below image, you only need to replace the original template.yaml with the [new one](https://github.com/awslabs/aws-cloudfront-extensions/blob/main/website/static/template/template.yaml)
 
    ![Yaml Changes](/images/yaml_changes.png)
     
 3. [Optional] Add solution id
 
-   Solution id is a unique id assigned by AWS GCR Solution team, you will need to add the solution id in template.yaml, all CloudFront+ solution id is [here](https://quip-amazon.com/nXxXAl58SGQF/2021-Solution-Progress-Tracking-Board) under CloudFront+ tab.
+   Solution id is a unique id assigned by AWS Solution team, you will need to add the solution id in template.yaml, all CloudFront Extensions solution id is [here](https://quip-amazon.com/nXxXAl58SGQF/2021-Solution-Progress-Tracking-Board) under CloudFront Extensions tab.
    {{% notice info %}}
    Add Solution id is **optional** for this workshop, you can skip this step
    {{% /notice %}}

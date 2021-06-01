@@ -5,21 +5,44 @@ weight: 2
 
 In this step, you will find and deploy serverless applications that have been published to the AWS Serverless Application Repository, the application serves content based on device type, for example, mobile device will be forwarded to access content for mobile devices, desktop device will be forwarded to access specific content, and so on so forth
 
+The following diagram is a high-level architecture of this lab
 
-## Deploy an application in SAR
+![Auth Architecture](/images/cloudfront-device-arch.png)
+
+The S3 bucket contains a demo website content, it has 4 folders:
+- desktop folder: resources in this folder will be returned if the request is from a desktop browser
+- mobile folder: resources in this folder will be returned if the request is from a mobile phone 
+- smarttv folder: resources in this folder will be returned if the request is from a smarttv 
+- tablet folder: resources in this folder will be returned if the request is from a tablet 
+
+Here is how it works
+
+1. The user sends viewer request to CloudFront
+2. CloudFront forwards below applicable headers to the origin based on User-Agent in the viewer request, CloudFront will set below headers to true or false, for example, if the request is from a mobile phone, CloudFront will set CloudFront-Is-Mobile-Viewer to true and other three headers to false
+   - CloudFront-Is-Desktop-Viewer
+   - CloudFront-Is-Mobile-Viewer
+   - CloudFront-Is-SmartTV-Viewer
+   - CloudFront-Is-Tablet-Viewer
+3. CloudFront routes the request to the nearest AWS edge location. The CloudFront distribution will launch a Lambda@Edge function on OriginRequest event
+4. Lambda@Edge rewrite the URI according to the headers, for example, it will redirect to mobile resources if the request is from a mobile phone
+5. The resources will be returned from the S3 bucket to the user 
+
+
+## Deploy serving-based-on-device application in SAR
 
 To find and configure an application in the AWS Serverless Application Repository
 
 1. Open [the AWS Serverless Application Repository page](https://serverlessrepo.aws.amazon.com/applications)
 2. Check **Show apps that create custom IAM roles or resource policies**
 3. Search the application name **serving-based-on-device**, choose the application
+   > All CloudFront extensions can be find by searching **aws-cloudfront-extensions**
 4. On the application detail page, check **I acknowledge that this app creates custom IAM roles**
 5. Choose **Deploy**. After the deployment is completed, it will redirect to application over page
 
 ## Deploy resources by CDK
-To download CloudFront+ code and upload it onto CloudShell
+To download CloudFront Extensions code and upload it onto CloudShell
 > Skip this step if you already have the codes in CloudShell
-1. Go to [CloudFront+ code](https://github.com/awslabs/aws-cloudfront-extensions)
+1. Go to [CloudFront Extensions code](https://github.com/awslabs/aws-cloudfront-extensions)
 2. Choose **Download ZIP**
    ![Github Download ZIP](/images/gh-download.png)
 3. Upload the zip package onto CloudShell
@@ -39,28 +62,33 @@ To deploy the demo website
 1. Go to [CloudShell](https://console.aws.amazon.com/cloudshell/home?region=us-east-1#)
    > In the top right corner of the console, make sure you’re using this region: **N. Virginia (us-east-1)** 
     
-2. Navigate to demo folder and deploy it, you need to specify an unique S3 bucket name to store the website content
+2. Navigate to demo folder and deploy it, below commands will create an S3 bucket to store the website content, so you need to specify an unique S3 bucket name
        
        cd aws-cloudfront-extensions-main/templates/workshop-demo/
        npm install
        npm run build
+       # Need to specify an unique S3 bucket name in below command, eg. cloudfront-extension-workshop 
        cdk deploy --parameters staticSiteBucketName=<your_unique_S3_bucket_name>
    Wait until the deployment is completed
+   
+   If this is the first time you use AWS CDK, you need to bootstrap first or else you will see below error.
+
+       ❌  WorkshopDemoStack failed: Error: This stack uses assets, so the toolkit stack must be deployed to the environment (Run "cdk bootstrap aws://unknown-account/unknown-region")
+       at Object.addMetadataAssetsToManifest (/usr/lib/node_modules/aws-cdk/lib/assets.ts:27:11)
+       at Object.deployStack (/usr/lib/node_modules/aws-cdk/lib/api/deploy-stack.ts:205:29)
+       at processTicksAndRejections (internal/process/task_queues.js:97:5)
+       at CdkToolkit.deploy (/usr/lib/node_modules/aws-cdk/lib/cdk-toolkit.ts:180:24)
+       at initCommandLine (/usr/lib/node_modules/aws-cdk/bin/cdk.ts:204:9)
+       This stack uses assets, so the toolkit stack must be deployed to the environment (Run "cdk bootstrap aws://unknown-account/unknown-region")
+   To bootstrap, execute this command
+
+       cdk bootstrap aws://<replace_with_your_aws_account_id>/us-east-1   
+
+
+
 3. Go to [CloudFormation console](https://console.aws.amazon.com/cloudformation/home?region=us-east-1), you will see a stack named **WorkshopDemoStack**
 4. Choose **WorkshopDemoStack** and click **Outputs** tab, it will show S3 bucket name, demo website url and CloudFront distribution id
    ![Device output](/images/output_device.png)
-
-## Configuration on the S3 bucket 
-1. Go to [S3 console](https://s3.console.aws.amazon.com/s3/home?region=us-east-1)
-2. Allow public read access for the objects in the S3 bucket because it will be serving as a public website 
-
-   Choose **Edit Block public access**, uncheck **block all public access**
-
-   > Be aware that every object in this bucket will become readable in public
-
-
-3. Choose **Objects** tab, choose all the files in the bucket and choose **Actions**, choose **Make public**
-
 
 
 ## Configuration on the CloudFront distribution
@@ -94,16 +122,28 @@ To deploy the demo website
 
    ![Device CF config](/images/cf-config-device.png)
 
+5. Choose **Origins and Origin Groups** tab, check the checkbox in **Origins** and choose **Edit**
+6. Do below configuration
+   - Set **Restrict Bucket Access** to Yes
+     {{% notice note %}}
+     If you can't see **Restrict Bucket Access** options, clean **Origin Domain Name** field and set it to your S3 bucket again to refresh the page
+     {{% /notice %}}
+   - Set **Origin Access Identity** to **Create a New Identity**
+   - Set **Grant Read Permissions on Bucket** to **Yes, Update Bucket Policy**
+   - Choose **Yes, Edit** to save the changes
+   ![Device Origin config](/images/device-OAI.png)
+     
+
+7. Wait until the CloudFront distribution status is Deployed
+
 
 
 ## Add a CloudFront Trigger to Run the Function
 
 To configure the CloudFront trigger for your function
-1. Go to [Lambda console](https://console.aws.amazon.com/lambda/home?region=us-east-1#/functions) and choose serving-based-on-device function which is deployed from SAR 
-2. Choose **Configuration** tab and choose **Triggers** 
-2. Add Trigger and choose **CloudFront**, choose **Deploy to Lambda@Edge**
-
-   ![CF Trigger](/images/CF_trigger.png)
+1. Go to [Lambda console](https://console.aws.amazon.com/lambda/home?region=us-east-1#/functions) and choose **ServingOnDeviceFunction** function which is deployed from SAR 
+2. Choose **Action** tab and choose **Deploy to Lambda@Edge**
+   ![CF Trigger](/images/CF_trigger_3.png)
 
 3. On the **Deploy to Lambda@Edge** page, enter the following information:
 
@@ -117,7 +157,6 @@ To configure the CloudFront trigger for your function
 
    Choose **Deploy**
 
-   ![Lambda Deploy](/images/deploy_para.png)
 
 4. Wait for the function to replicate. This typically takes several minutes
 

@@ -16,15 +16,15 @@ Globals:
 Metadata:
   AWS::ServerlessRepo::Application:
     Name: http302-from-origin
-    Description: SAM Template for http302-from-origin
+    Description: The Lambda@Edge function is going to handle http 302 from origin, which is going to access the redirected location and return actual content
     Author: AWS
     SpdxLicenseId: Apache-2.0
     LicenseUrl: LICENSE.txt
     ReadmeUrl: README.md
     Labels: ['gcr','gcr-solutions','cloudfront','cloudfront+','aws-cloudfront-extensions','edge','lambda-edge', 'aws']
-    HomePageUrl: https://www.amazonaws.cn/en/solutions/
+    HomePageUrl: https://www.amazonaws.cn/en/solutions/lambda-edge-collection-for-cloudfront/
     SemanticVersion: 1.0.0
-    SourceCodeUrl: https://github.com/cc4i/aws-cloudfront-extensions/edge/nodejs/http302-from-origin
+    SourceCodeUrl: https://github.com/awslabs/aws-cloudfront-extensions/tree/main/edge/nodejs/http302-from-origin
 
 
 
@@ -59,7 +59,7 @@ Resources:
 Outputs:
   Http302Function:
     Description: "Lambda Edge function ARN"
-    Value: "Http302Function"
+    Value: !GetAtt Http302Function.Arn
   Http302FunctionIamRole:
     Description: "Implicit IAM Role created for Simple Lambda Edge function"
     Value: !GetAtt EdgeFunctionRole.Arn
