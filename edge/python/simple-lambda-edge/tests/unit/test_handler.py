@@ -1,8 +1,13 @@
 import json
 
 import pytest
+import os
+import sys
 
-from simple_lambda_edge import app
+script_dir = os.path.dirname( __file__ )
+module_dir = os.path.join( script_dir, '..', '..', 'simple-lambda-edge' )
+sys.path.append(module_dir)
+import app
 
 
 @pytest.fixture()
