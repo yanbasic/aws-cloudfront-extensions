@@ -9,4 +9,5 @@
 
 #check code style
 echo edge/$labelName
+export PYTHONPATH="${PWD}/edge/${labelName}/${labelName#*/}"
 pylint edge/$labelName/
