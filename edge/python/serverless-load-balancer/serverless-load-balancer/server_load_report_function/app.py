@@ -26,7 +26,7 @@ def lambda_handler(event, context):
         )
         print("asg_name", asg_name)
         print("table_name", table_name)
-        print(item)
+        --print(item)
         result = response['ResponseMetadata']
         return result
 
