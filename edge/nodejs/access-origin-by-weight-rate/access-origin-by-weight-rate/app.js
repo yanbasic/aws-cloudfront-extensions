@@ -9,7 +9,7 @@ var weights = originList.map(function (originList) {
 
 /* This is an origin request function */
 exports.handler = (event, context, callback) => {
-    console.log('Handler start!');
+    console.log('Handler start!111');
     const request = event.Records[0].cf.request;
 
     //select origin according to weight rate
