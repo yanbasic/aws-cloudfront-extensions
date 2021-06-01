@@ -12,5 +12,5 @@
 
 #check code style
 npm install eslint --save-dev
-
+env
 ./node_modules/.bin/eslint -c .eslintrc.yml edge/$labelName
