@@ -16,7 +16,7 @@ CONTENT = """
 def lambda_handler(event, context):
      # Generate HTTP OK response using 200 status code with HTML body.
      response = {
-         'status': '302',
+         'status': '303',
          'statusDescription': 'OK',
          'headers': {
              'cache-control': [
