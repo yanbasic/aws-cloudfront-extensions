@@ -1,8 +1,10 @@
 import json
 
 import pytest
+import os
+import sys
 
-from simple_lambda_edge import app
+import app
 
 
 @pytest.fixture()
